@@ -35,7 +35,7 @@ void verticle_seam(Mat image_old, std::vector<int>& path)
     image = Mat(image_old.size(), CV_8UC1);
     
     image_old.convertTo(image_old,CV_8UC3);
-    std::cout << path.size() << std::endl << std::endl;
+    //std::cout << path.size() << std::endl << std::endl;
     //std::cout << type2str(image.type()) << std::endl << std::endl;
     //std::cout << type2str(image_old.type()) << std::endl << std::endl;
     //std::cout << image_old.type() << std::endl;
@@ -177,29 +177,28 @@ void compress_horizontal(Mat image_old,Mat& image, int target_width){
     
     while(image.cols > target_width){
         image.convertTo(image,CV_8UC3);
-        std::cout << path.size() << std::endl << std::endl;
+        //std::cout << path.size() << std::endl << std::endl;
         verticle_seam(image, path);    
-        std::reverse(path.begin(),path.end());
-        image_temp = Mat::zeros(image.rows-1,image.cols-1, image.type());
+        //std::reverse(path.begin(),path.end());
+        image_temp = Mat::zeros(image.rows,image.cols-1, image.type());
         for(int c = 0; c < 3; c++){
             //std::cout << c << std::endl;
             for(int i = 0; i< image.rows; i++){
-                for (int j = 0; j < image.cols; j++){
+                for (int j = 0; j < image.cols-1; j++){
                     if(j < path[i]){
                         image_temp.at<Vec3b>(i,j)[c] = image.at<Vec3b>(i,j)[c];
                     } else if(j > path[i]){
-                        image_temp.at<Vec3b>(i,j)[c] = image.at<Vec3b>(i+1,j)[c];
+                        image_temp.at<Vec3b>(i,j)[c] = image.at<Vec3b>(i,j+1)[c];
                     }
                     
                 }
             }    
         }
-        std::cout << image_temp.size() << std::endl << std::endl;
+        //std::cout << image_temp.size() << std::endl << std::endl;
         image.release();
         image = Mat(image_temp);
         image_temp.release();
         path.empty();
-        return;
 
         
                

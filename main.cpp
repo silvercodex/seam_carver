@@ -12,8 +12,8 @@ int main( int argc, char** argv )
     Mat img(300, 400, CV_8UC3, Scalar(0,0, 100));
     resize(image,img,img.size());
     image.release();
-    compress_horizontal(img, image, 399);
-    std::cout << image.size() << std::endl << std::endl;
+    compress_horizontal(img, image, 350);
+    //std::cout << image.size() << std::endl << std::endl;
     namedWindow( "compressed", WINDOW_AUTOSIZE );   
     imshow( "compressed", image );
     namedWindow( "original", WINDOW_AUTOSIZE );   
